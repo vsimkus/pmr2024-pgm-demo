@@ -1,0 +1,25 @@
+# Create environment with `conda env create -f environment.yml`
+# Activate environment with `conda activate pmr`
+# Update environment with `conda env update --file environment.yml`
+# Remove environment with `conda remove --name pmr --all`
+
+name: pmr
+channels:
+    - conda-forge
+    - anaconda
+    - ankurankan
+    - pytorch
+dependencies:
+    - python=3.10
+    - numpy=1.23.5
+    - pytorch=1.13.1
+    - pgmpy=0.1.24
+    - scipy=1.10.0
+    - opt_einsum
+    - pip
+    - pip:
+    #     - networkX
+        - daft==0.1.2 
+    - matplotlib
+    - notebook
+    - ipywidgets

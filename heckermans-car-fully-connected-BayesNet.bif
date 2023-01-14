@@ -1,0 +1,67 @@
+network unknown {
+}
+variable Battery {
+    type discrete [ 2 ] { Bad, Good };
+    property weight = None ;
+}
+variable Fuel {
+    type discrete [ 2 ] { Empty, Not_empty };
+    property weight = None ;
+}
+variable Gauge {
+    type discrete [ 2 ] { Empty, Not_empty };
+    property weight = None ;
+}
+variable Start {
+    type discrete [ 2 ] { No, Yes };
+    property weight = None ;
+}
+variable TurnOver {
+    type discrete [ 2 ] { No, Yes };
+    property weight = None ;
+}
+probability ( Battery ) {
+    table 0.02, 0.98 ;
+}
+probability ( Fuel | Battery ) {
+    ( Bad ) 0.05, 0.95;
+    ( Good ) 0.05, 0.95;
+
+}
+probability ( Gauge | Battery, Fuel ) {
+    ( Bad, Empty ) 0.99, 0.01;
+    ( Bad, Not_empty ) 0.1, 0.9;
+    ( Good, Empty ) 0.97, 0.03;
+    ( Good, Not_empty ) 0.04, 0.96;
+
+}
+probability ( Start | Battery, Fuel, Gauge, TurnOver ) {
+    ( Bad, Empty, Empty, No ) 1.0, 0.0;
+    ( Bad, Empty, Empty, Yes ) 0.92, 0.08;
+    ( Bad, Empty, Not_empty, No ) 1.0, 0.0;
+    ( Bad, Empty, Not_empty, Yes ) 0.92, 0.08;
+    ( Bad, Not_empty, Empty, No ) 1.0, 0.0;
+    ( Bad, Not_empty, Empty, Yes ) 0.01, 0.99;
+    ( Bad, Not_empty, Not_empty, No ) 1.0, 0.0;
+    ( Bad, Not_empty, Not_empty, Yes ) 0.01, 0.99;
+    ( Good, Empty, Empty, No ) 1.0, 0.0;
+    ( Good, Empty, Empty, Yes ) 0.92, 0.08;
+    ( Good, Empty, Not_empty, No ) 1.0, 0.0;
+    ( Good, Empty, Not_empty, Yes ) 0.92, 0.08;
+    ( Good, Not_empty, Empty, No ) 1.0, 0.0;
+    ( Good, Not_empty, Empty, Yes ) 0.01, 0.99;
+    ( Good, Not_empty, Not_empty, No ) 1.0, 0.0;
+    ( Good, Not_empty, Not_empty, Yes ) 0.01, 0.99;
+
+}
+probability ( TurnOver | Battery, Fuel, Gauge ) {
+    ( Bad, Empty, Empty ) 0.98, 0.02;
+    ( Bad, Empty, Not_empty ) 0.98, 0.02;
+    ( Bad, Not_empty, Empty ) 0.98, 0.02;
+    ( Bad, Not_empty, Not_empty ) 0.98, 0.02;
+    ( Good, Empty, Empty ) 0.03, 0.97;
+    ( Good, Empty, Not_empty ) 0.03, 0.97;
+    ( Good, Not_empty, Empty ) 0.03, 0.97;
+    ( Good, Not_empty, Not_empty ) 0.03, 0.97;
+
+}
